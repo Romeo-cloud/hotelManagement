@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login & Signup</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        /* Base CSS Variables for colors */
+        :root {
+            --primary-color: #4CAF50; /* Soft Green */
+            --secondary-color: #333333; /* Dark Gray */
+            --accent-color: #FFC107; /* Pale Yellow */
+            --bg-color: #F4F4F4; /* Light Gray */
+            --light-bg: #FFFFFF; /* White */
+            --border-color: #ddd; /* Light Gray Border */
+            --transition: all 0.3s ease;
+        }
+    
+        /* Global Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Playfair Display', serif;
+        }
+    
+        body {
+            background-color: var(--bg-color);
+            font-size: 16px;
+            line-height: 1.6;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-image: url('/static/assets/images/banner-img.jpg'); /* Example hotel image URL */
+            background-size: cover;
+            background-position: center;
+            color: #fff;
+        }
+    
+        /* Container styles */
+        .form-container {
+            width: 100%;
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 30px;
+            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+    
+        .form-container h2 {
+            text-align: center;
+            color: var(--secondary-color);
+            margin-bottom: 20px;
+        }
+    
+        .form-container label {
+            font-size: 16px;
+            margin-bottom: 8px;
+            color: var(--secondary-color);
+        }
+    
+        .form-container input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            font-size: 16px;
+            transition: var(--transition);
+        }
+    
+        .form-container input[type="submit"] {
+            background-color: var(--primary-color);
+            border: none;
+            color: var(--light-bg);
+            font-weight: bold;
+            cursor: pointer;
+        }
+    
+        .form-container input[type="submit"]:hover {
+            background-color: var(--accent-color);
+        }
+    
+        /* Hover effects for input fields */
+        .form-container input:focus {
+            outline: none;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+        }
+    
+        /* Form toggle links */
+        .form-container .toggle-form {
+            text-align: center;
+            font-size: 14px;
+            color: var(--secondary-color);
+        }
+    
+        .form-container .toggle-form a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: bold;
+        }
+    
+        .form-container .toggle-form a:hover {
+            color: var(--accent-color);
+        }
+    
+        h5 {
+            color: red;
+            margin: 10px 0;
+        }
+    
+        /* Responsive Design: Mobile First */
+    
+        /* Small devices: Mobile Phones (portrait) */
+        @media (max-width: 480px) {
+            body {
+                font-size: 14px;
+            }
+    
+            .form-container {
+                padding: 20px;
+                margin: 20px;
+                max-width: 100%;
+            }
+    
+            .form-container h2 {
+                font-size: 20px;
+            }
+    
+            .form-container input {
+                font-size: 14px;
+                padding: 10px;
+            }
+    
+            .form-container input[type="submit"] {
+                font-size: 14px;
+                padding: 12px;
+            }
+        }
+    
+        /* Medium devices: Tablets (portrait) */
+        @media (max-width: 768px) {
+            body {
+                font-size: 15px;
+            }
+    
+            .form-container {
+                max-width: 90%;
+                padding: 25px;
+            }
+    
+            .form-container h2 {
+                font-size: 22px;
+            }
+    
+            .form-container input {
+                font-size: 15px;
+                padding: 11px;
+            }
+    
+            .form-container input[type="submit"] {
+                font-size: 15px;
+                padding: 14px;
+            }
+        }
+    
+        /* Large devices: Desktops */
+        @media (min-width: 1024px) {
+            body {
+                font-size: 16px;
+            }
+    
+            .form-container {
+                max-width: 400px; /* Keeping the form container width fixed for larger screens */
+                padding: 30px;
+            }
+    
+            .form-container h2 {
+                font-size: 24px;
+            }
+    
+            .form-container input {
+                font-size: 16px;
+                padding: 12px;
+            }
+    
+            .form-container input[type="submit"] {
+                font-size: 16px;
+                padding: 15px;
+            }
+        }
+    </style>
+    
+</head>
+<body>
+
+    <!-- Signup Form -->
+    <div class="form-container" id="signup-form">
+        <h2>Sign Up</h2>
+
+        {% if messages %}
+            {% for message in messages %}
+                <h5>{{message}}</h5>
+            {% endfor %}
+         {% endif %}
+    
+
+        <form action="#" method="POST">
+            {%csrf_token%}
+            
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" placeholder="Enter your username" required>
+            <label for="email-signup">Email</label>
+            <input type="email" id="email-signup" name="email" placeholder="Enter your email" required>
+            <label for="password-signup">Password</label>
+            <input type="password" id="password-signup" name="password" placeholder="Enter your password" required>
+            <label for="confirm-password">Confirm Password</label>
+            <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm your password" required>
+            <input type="submit" value="Sign Up">
+        </form>
+        <div class="toggle-form">
+            <p>Already have an account? <a href="login.html" onclick="toggleForm('login')">Login</a></p>
+        </div>
+    </div>
+    
+
+    <script>
+        // Function to toggle between login and signup forms
+        function toggleForm(formType) {
+            if (formType === 'signup') {
+                document.getElementById('login-form').style.display = 'none';
+                document.getElementById('signup-form').style.display = 'block';
+            } else {
+                document.getElementById('login-form').style.display = 'block';
+                document.getElementById('signup-form').style.display = 'none';
+            }
+        }
+    </script>
+
+</body>
+</html>

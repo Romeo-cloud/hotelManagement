@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Room Booking</title>
+
+    <style>
+        body {
+          font-family: 'Arial', sans-serif;
+          color: #fff;
+          margin: 0;
+          min-height: 100vh;
+          padding: 20px;
+          overflow-y: auto; /* Allow vertical scrolling */
+        }
+      
+        body::before {
+          content: '';
+          position: fixed; /* Keeps the background static */
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-image: url('/static/assets/images/customer-banner.jpg'); /* Ensure the image path is correct */
+          background-size: cover;
+          background-position: center;
+          filter: blur(8px); /* Apply blur effect */
+          z-index: -1; /* Place behind all content */
+        }
+      
+        .book {
+          background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black */
+          border-radius: 8px;
+          padding: 40px;
+          width: 100%;
+          max-width: 450px;
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+          margin: 0 auto;
+          min-height: 450px;
+          z-index: 1; /* Ensure it's above the background */
+        }
+      
+        .book-form {
+          display: flex;
+          flex-direction: column;
+        }
+      
+        .form-item {
+          margin-bottom: 20px;
+        }
+      
+        label {
+          font-size: 16px;
+          color: #fff; /* White label text for visibility */
+          margin-bottom: 8px;
+          display: block;
+        }
+      
+        input[type="text"],
+        input[type="email"],
+        input[type="date"],
+        input[type="number"],
+        input[type="tel"],
+        select {
+          width: 100%;
+          padding: 12px;
+          margin-top: 5px;
+          border-radius: 5px;
+          border: 1px solid #ddd;
+          font-size: 16px;
+          background-color: #fff; /* White background for readability */
+          color: #333; /* Dark text for better readability */
+          box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+          outline: none;
+          transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+      
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="date"]:focus,
+        input[type="number"]:focus,
+        input[type="tel"]:focus,
+        select:focus {
+          border-color: #4CAF50;
+          box-shadow: 0 0 5px rgba(76, 175, 80, 0.8);
+        }
+      
+        input[type="submit"],
+        button[type="submit"] {
+          background-color: #4CAF50;
+          color: white;
+          padding: 15px;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+          font-size: 16px;
+          transition: background-color 0.3s ease, transform 0.2s ease;
+          margin-top: 20px;
+          text-decoration: none;
+        }
+      
+        input[type="submit"]:hover,
+        button[type="submit"]:hover {
+          background-color: #45a049;
+          transform: scale(1.02);
+          text-decoration: none;
+        }
+      
+        select {
+          appearance: none; /* Remove default dropdown styling */
+          padding-right: 40px; /* Space for custom dropdown arrow */
+        }
+      
+        .errorlist {
+          color: #ff6b6b; /* Error text color */
+          margin-bottom: 10px;
+          font-size: 14px;
+        }
+      
+        .form-step {
+          display: none;
+        }
+      
+        .form-step.active {
+          display: block;
+        }
+      
+        button[type="button"] {
+          background-color: #4CAF50;
+          color: white;
+          padding: 10px 20px;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+          font-size: 16px;
+          margin-top: 10px;
+          transition: background-color 0.3s ease;
+          text-decoration: none;
+        }
+      
+        button[type="button"]:hover {
+          background-color: #45a049;
+          text-decoration: none;
+        }
+      
+        /* Responsive Design: Mobile First */
+      
+        /* Small devices: Mobile Phones (portrait) */
+        @media (max-width: 480px) {
+          body {
+            padding: 10px; /* Reduce padding for smaller screens */
+          }
+      
+          .book {
+            padding: 20px;
+            min-height: 350px;
+            max-width: 100%;
+            margin: 0 10px;
+          }
+      
+          .book-form {
+            padding: 10px;
+          }
+      
+          input[type="submit"],
+          button[type="submit"] {
+            padding: 12px;
+            font-size: 14px;
+          }
+      
+          label {
+            font-size: 14px;
+          }
+      
+          input[type="text"],
+          input[type="email"],
+          input[type="date"],
+          input[type="number"],
+          input[type="tel"],
+          select {
+            font-size: 14px;
+            padding: 10px;
+          }
+        }
+      
+        /* Medium devices: Tablets (portrait) */
+        @media (max-width: 768px) {
+          .book {
+            padding: 30px;
+            max-width: 85%;
+          }
+      
+          .book-form {
+            padding: 20px;
+          }
+      
+          input[type="submit"],
+          button[type="submit"] {
+            padding: 14px;
+            font-size: 15px;
+          }
+      
+          input[type="text"],
+          input[type="email"],
+          input[type="date"],
+          input[type="number"],
+          input[type="tel"],
+          select {
+            font-size: 15px;
+            padding: 12px;
+          }
+      
+          label {
+            font-size: 15px;
+          }
+        }
+      
+        /* Large devices: Desktops */
+        @media (min-width: 1024px) {
+          body {
+            padding: 20px; /* Retain padding for desktop */
+          }
+      
+          .book {
+            max-width: 450px;
+            padding: 40px;
+          }
+      
+          input[type="submit"],
+          button[type="submit"] {
+            padding: 15px;
+            font-size: 16px;
+          }
+      
+          input[type="text"],
+          input[type="email"],
+          input[type="date"],
+          input[type="number"],
+          input[type="tel"],
+          select {
+            font-size: 16px;
+            padding: 12px;
+          }
+      
+          label {
+            font-size: 16px;
+          }
+        }
+      </style>
+      
+    
+</head>
+<body>
+    <div class="book">
+        <form class="book-form" method="post" action="{% url 'book_room' %}" id="multiStepForm">
+            {% csrf_token %}
+            
+            <!-- Step 1 -->
+            <div class="form-step active">
+                <div class="form-item">
+                    {{ form.name.label_tag }}
+                    {{ form.name }}
+                </div>
+                <div class="form-item">
+                    {{ form.email.label_tag }}
+                    {{ form.email }}
+                </div>
+                <div class="form-item">
+                    {{ form.phone_number.label_tag }}
+                    {{ form.phone_number }}
+                </div>
+                <button type="button" onclick="nextStep()">Next</button>
+            </div>
+    
+            <!-- Step 2 -->
+            <div class="form-step">
+                <div class="form-item">
+                    {{ form.checkin_date.label_tag }}
+                    {{ form.checkin_date }}
+                </div>
+                <div class="form-item">
+                    {{ form.checkout_date.label_tag }}
+                    {{ form.checkout_date }}
+                </div>
+                <div class="form-item">
+                    {{ form.adult_count.label_tag }}
+                    {{ form.adult_count }}
+                </div>
+                <div class="form-item">
+                    {{ form.children_count.label_tag }}
+                    {{ form.children_count }}
+                </div>
+                <div class="form-item">
+                    <label for="room-type">Room Type:</label>
+                    <select id="room-type" name="room_type" onchange="fetchAvailableRooms()">
+                        <option value="standard">Standard</option>
+                        <option value="executive">Executive</option>
+                    </select>
+                </div>
+                <div class="form-item">
+                    <label for="rooms">Room Number:</label>
+                    <select id="rooms" name="rooms">
+                        <!-- Dynamic options populated via JS -->
+                    </select>
+                </div>
+                <button type="button" onclick="prevStep()">Back</button>
+                <button type="submit">Book Now</button>
+            </div>
+        </form>
+    </div>
+
+<script>
+    let currentStepIndex = 0;
+    const steps = document.querySelectorAll('.form-step');
+
+    function showStep(index) {
+        steps.forEach((step, i) => {
+            step.classList.toggle('active', i === index);
+        });
+    }
+
+    function nextStep() {
+        if (currentStepIndex < steps.length - 1) {
+            currentStepIndex++;
+            showStep(currentStepIndex);
+        }
+    }
+
+    function prevStep() {
+        if (currentStepIndex > 0) {
+            currentStepIndex--;
+            showStep(currentStepIndex);
+        }
+    }
+
+    function fetchAvailableRooms() {
+            const roomType = document.getElementById('room-type').value;
+            const checkinDate = document.getElementById('id_checkin_date').value;
+            const checkoutDate = document.getElementById('id_checkout_date').value;
+
+            if (roomType && checkinDate && checkoutDate) {
+                fetch(`/available-rooms/?room_type=${roomType}&checkin_date=${checkinDate}&checkout_date=${checkoutDate}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const roomsSelect = document.getElementById('rooms');
+                        roomsSelect.innerHTML = '';
+                        if (data.available_rooms) {
+                            data.available_rooms.forEach(room => {
+                                const option = document.createElement('option');
+                                option.value = room;
+                                option.textContent = room;
+                                roomsSelect.appendChild(option);
+                            });
+                        } else {
+                            const option = document.createElement('option');
+                            option.value = '';
+                            option.textContent = 'No rooms available';
+                            roomsSelect.appendChild(option);
+                        }
+                    });
+            }
+        }
+
+    // Initialize by showing the first step
+    showStep(currentStepIndex);
+</script>
+
+
+</body>
+</html>
+

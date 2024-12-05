@@ -1,0 +1,55 @@
+/* General Styles for Service Details */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+.service-details {
+    max-width: 800px;
+    margin: 50px auto;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.service-details h1 {
+    font-size: 2rem;
+    color: #007BFF;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+}
+
+.service-details p {
+    font-size: 1.2rem;
+    color: #555;
+    line-height: 1.8;
+    margin-bottom: 30px;
+}
+
+.service-details .btn {
+    display: inline-block;
+    background-color: #007BFF;
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.service-details .btn:hover {
+    background-color: #0056b3;
+}
+
+/* Image Styling */
+.service-details img {
+    width: 100%;  /* Make the image take up the full width of the container */
+    height: auto; /* Maintain the image's aspect ratio */
+    border-radius: 8px; /* Rounded corners to match the container */
+    margin-bottom: 30px; /* Space between the image and the content below */
+}

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ service.title }}</title>
+    <link rel="stylesheet" href="{% static 'assets/css/service.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/service_details.css' %}">
+</head>
+<body>
+    <div class="service-details">
+        <h1>{{ service.title }}</h1>
+        {% if service.image %}
+            <img src="{{ service.image }}" alt="{{ service.title }}">
+        {% endif %}
+        <p>{{ service.description }}</p>
+        <a href="/" class="btn">Back to Home</a>
+    </div>
+    
+</body>
+</html>
